@@ -4,6 +4,7 @@ import board
 import busio
 
 import qrcode
+import py_resize
 
 i2c = busio.I2C(board.SCL, board.SDA)
 sensor = adafruit_bmp280.Adafruit_BMP280_I2C(i2c)
@@ -49,5 +50,7 @@ while True:
         # TODO: add call to Nikhil's script to make sure qrCode has the right dimensions
         # Then actually display on screen
         qrCode = qrcode.make(state)
+        qrCode.save(f'{state.super.deviceId}.bmp')
+        py_resize.main(f'-f {state.super.deviceId}.bmp')
 
 
